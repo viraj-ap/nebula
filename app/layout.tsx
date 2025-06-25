@@ -1,9 +1,10 @@
+// app/layout.tsx
 import type { Metadata } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
 import { Poppins } from "next/font/google";
-import { ThemeProvider } from "@/components/theme-provider";
+import "./globals.css";
+import { Providers } from "@/components/providers";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,6 +16,7 @@ const poppins = Poppins({
   variable: "--font-poppins",
   subsets: ["latin"],
 });
+
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
@@ -32,20 +34,13 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider appearance={{ cssLayerName: "clerk" }}>
-      <html lang="en">
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
+      <html lang="en" suppressHydrationWarning>
+        <body
+          className={`${poppins.variable} ${geistSans.variable} ${geistMono.variable} antialiased`}
         >
-          <body
-            className={`${poppins.variable} ${geistSans.variable} ${geistMono.variable} antialiased`}
-          >
-            <header className="flex justify-end items-center p-4 gap-4 h-16"></header>
-            {children}
-          </body>
-        </ThemeProvider>
+          <header />
+          <Providers>{children}</Providers>
+        </body>
       </html>
     </ClerkProvider>
   );
