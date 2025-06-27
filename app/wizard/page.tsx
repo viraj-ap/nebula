@@ -45,7 +45,7 @@ async function page() {
       </Card>
       <Separator />
       <Button className="w-full" asChild>
-        <Link href={"/"}>I'm done take me to the dashboard.</Link>
+        <Link href={"/dashboard"}>I'm done take me to the dashboard.</Link>
       </Button>
       <div>
         <img src="/logo.png" alt="" className="w-48" />

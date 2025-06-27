@@ -64,7 +64,7 @@ function DesktopNavbar() {
       <nav className="container mx-auto flex items-center justify-between px-8 py-4">
         {/* Logo */}
         <div className="flex items-center">
-          <img src="/logo.png" alt="Logo" className="w-20" />
+          <img src="/logo.png" alt="Logo" className="w-16" />
         </div>
 
         {/* Center Nav Links */}
