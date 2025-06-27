@@ -1,5 +1,13 @@
+"use client";
 import { Button } from "@/components/ui/button";
-import { Command, CommandInput } from "@/components/ui/command";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command";
 import {
   Popover,
   PopoverContent,
@@ -7,8 +15,10 @@ import {
 } from "@/components/ui/popover";
 import { TransactionType } from "@/lib/types";
 import { Category } from "@prisma/client";
-import { useQueries, useQuery } from "@tanstack/react-query";
-import React from "react";
+import { useQuery } from "@tanstack/react-query";
+import { Check, ChevronDown } from "lucide-react";
+import { cn } from "@/lib/utils";
+import React, { useCallback } from "react";
 import CreateCategoryDialog from "./create-category-dialog";
 
 interface Props {
@@ -18,13 +28,17 @@ interface Props {
 }
 
 const CategoryPicker = React.forwardRef<HTMLButtonElement, Props>(
-  ({ type, onChange, value }, ref) => {
+  ({ type, onChange, value: initialValue }, ref) => {
     const [open, setOpen] = React.useState(false);
+    const [value, setValue] = React.useState<string | undefined>(initialValue);
 
     const categoriesQuery = useQuery({
       queryKey: ["categories", type],
       queryFn: () => {
         return fetch(`/api/categories?type=${type}`).then((res) => {
+          if (!res.ok) {
+            throw new Error("Failed to fetch categories");
+          }
           return res.json();
         });
       },
@@ -34,34 +48,79 @@ const CategoryPicker = React.forwardRef<HTMLButtonElement, Props>(
       (category: Category) => category.name === value
     );
 
+    const handleCategorySelect = (categoryName: string) => {
+      setValue(categoryName);
+      onChange?.(categoryName);
+      setOpen(false);
+    };
+
+    const successCallback = useCallback(
+      (category: Category) => {
+        setValue(category.name);
+        setOpen((prev) => !prev);
+      },
+      [setValue, setOpen]
+    );
+
     return (
-      <Popover open={open} onOpenChange={setOpen}>
-        <PopoverTrigger asChild>
-          <Button
-            ref={ref}
-            variant={"outline"}
-            role="combobox"
-            aria-expanded={open}
-            className="w-[200px] justify-between"
-          >
-            {selectedCategory ? (
-              <CategoryRow category={selectedCategory} />
-            ) : (
-              "Select category"
-            )}
-          </Button>
-        </PopoverTrigger>
-        <PopoverContent className="w-[200px] p-0">
-          <Command
-            onSubmit={(e) => {
-              e.preventDefault();
-            }}
-          >
-            <CommandInput placeholder="Search Category" />
-            <CreateCategoryDialog type={type} />
-          </Command>
-        </PopoverContent>
-      </Popover>
+      <div className="flex flex-col gap-2">
+        <Popover open={open} onOpenChange={setOpen}>
+          <PopoverTrigger asChild>
+            <Button
+              ref={ref}
+              variant="outline"
+              role="combobox"
+              aria-expanded={open}
+              className="w-full justify-between"
+            >
+              {selectedCategory ? (
+                <CategoryRow category={selectedCategory} />
+              ) : (
+                "Select category"
+              )}
+              <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="w-full p-0" align="start">
+            <Command>
+              <CommandInput placeholder="Search category..." />
+              <CommandList>
+                <CommandEmpty>
+                  <div className="flex flex-col items-center gap-2 py-4">
+                    <p>Category not found</p>
+                    <p className="text-xs text-muted-foreground">
+                      Tip: Create a new category
+                    </p>
+                  </div>
+                </CommandEmpty>
+                <CommandGroup>
+                  {categoriesQuery.data?.map((category: Category) => (
+                    <CommandItem
+                      key={category.name}
+                      value={category.name}
+                      onSelect={() => handleCategorySelect(category.name)}
+                    >
+                      <Check
+                        className={cn(
+                          "mr-2 h-4 w-4",
+                          value === category.name ? "opacity-100" : "opacity-0"
+                        )}
+                      />
+                      <CategoryRow category={category} />
+                    </CommandItem>
+                  ))}
+                </CommandGroup>
+                <CommandGroup>
+                  <CreateCategoryDialog
+                    type={type}
+                    successCallback={successCallback}
+                  />
+                </CommandGroup>
+              </CommandList>
+            </Command>
+          </PopoverContent>
+        </Popover>
+      </div>
     );
   }
 );

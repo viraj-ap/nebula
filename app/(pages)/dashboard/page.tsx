@@ -31,9 +31,9 @@ async function page() {
               trigger={
                 <Button
                   variant="secondary"
-                  className="border-emerald-500 bg-emerald-600 text-white hover:bg-emerald-700 hover:text-white mr-5"
+                  className="border-emerald-500 bg-emerald-600 text-white hover:bg-emerald-700 hover:text-white cursor-pointer"
                 >
-                  New income
+                  New income 💵
                 </Button>
               }
               type="income"
@@ -43,9 +43,9 @@ async function page() {
               trigger={
                 <Button
                   variant="secondary"
-                  className="border-rose-500 bg-rose-600 text-white hover:bg-rose-700 hover:text-white mr-5"
+                  className="border-rose-500 bg-rose-600 text-white hover:bg-rose-700 hover:text-white mr-5 cursor-pointer"
                 >
-                  New expense
+                  New expense 💸
                 </Button>
               }
               type="expense"
