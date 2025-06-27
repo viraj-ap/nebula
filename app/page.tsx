@@ -1,5 +1,14 @@
+"use client";
 import { ModeToggle } from "@/components/theme-toggle";
-import { SignedOut, SignInButton, SignUpButton, SignedIn, UserButton } from "@clerk/nextjs";
+import { Button } from "@/components/ui/button";
+import {
+  SignedOut,
+  SignInButton,
+  SignUpButton,
+  SignedIn,
+  UserButton,
+} from "@clerk/nextjs";
+import { redirect } from "next/navigation";
 
 export default function Home() {
   return (
@@ -17,6 +26,22 @@ export default function Home() {
       </SignedIn>
       <div>
         <ModeToggle />
+      </div>
+      <div className="flex flex-col items-center justify-center space-y-4 mt-10 cursor-pointer">
+        <Button className="cursor-pointer" onClick={() => redirect("/dashboard")} variant={"secondary"}>
+          Dashboard
+        </Button>
+        <Button className="cursor-pointer" onClick={() => redirect("/wizard")} variant={"secondary"}>
+          Wizard
+        </Button>
+        <Button className="cursor-pointer" onClick={() => redirect("/transactions")} variant={"secondary"}>
+          Transactions
+        </Button>
+        <Button className="cursor-pointer" onClick={() => redirect("/manage")} variant={"secondary"}>
+          Manage
+        </Button>
+        
+        
       </div>
     </div>
   );

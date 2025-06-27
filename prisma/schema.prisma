@@ -37,12 +37,13 @@ model Transaction {
   description String
   date        DateTime
   userId      String
+  type        String   @default("income")
 
   category     String
   categoryIcon String
 }
 
-model MonthHistoy {
+model MonthHistory {
   userId  String
   day     Int
   month   Int
@@ -53,7 +54,7 @@ model MonthHistoy {
   @@id([day, month, year, userId])
 }
 
-model YearHistoy {
+model YearHistory {
   userId  String
   month   Int
   year    Int

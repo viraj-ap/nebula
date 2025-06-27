@@ -15,7 +15,7 @@ import {
   CreateTransactionSchema,
   CreateTransactionSchemaType,
 } from "@/schema/transaction";
-import React from "react";
+import React, { useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -37,6 +37,10 @@ import {
 import { CalendarIcon, Loader2 } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
 import { format } from "date-fns";
+import { CreateTransaction } from "../_actions/transactions";
+import { toast } from "sonner";
+import { useMutation } from "@tanstack/react-query";
+import { DateToUTCDate } from "@/lib/helpers";
 
 interface Props {
   trigger: React.ReactNode;
@@ -57,11 +61,35 @@ const CreateTransactionDialog = ({ trigger, type }: Props) => {
     },
   });
 
-  const onSubmit = (values: CreateTransactionSchemaType) => {
-    console.log("Form Submitted:", values);
-    form.reset();
-    setOpen(false);
-  };
+  const { mutate, isPending } = useMutation({
+    mutationFn: CreateTransaction,
+    onSuccess: () => {
+      toast.success("Transaction created successfully 🎉", {
+        id: "create-transaction",
+      });
+      form.reset({
+        type,
+        date: new Date(),
+        description: "",
+        amount: 0,
+        category: "",
+      });
+      setOpen(false);
+    },
+  });
+
+  const onSubmit = useCallback(
+    (values: CreateTransactionSchemaType) => {
+      toast.loading("Creating transaction...", {
+        id: "create-transaction",
+      });
+      mutate({
+        ...values,
+        date: DateToUTCDate(values.date),
+      });
+    },
+    [mutate]
+  );
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -167,7 +195,10 @@ const CreateTransactionDialog = ({ trigger, type }: Props) => {
                           <Calendar
                             mode="single"
                             selected={field.value}
-                            onSelect={field.onChange}
+                            onSelect={(value) => {
+                              if (!value) return;
+                              field.onChange(value);
+                            }}
                             initialFocus
                           />
                         </PopoverContent>
@@ -187,25 +218,22 @@ const CreateTransactionDialog = ({ trigger, type }: Props) => {
                 type="button"
                 variant="outline"
                 onClick={() => setOpen(false)}
+                className="cursor-pointer"
               >
                 Cancel
               </Button>
-              <Button type="submit">Create {type}</Button>
+              <Button
+                type="submit"
+                disabled={isPending}
+                className="cursor-pointer"
+              >
+                {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                Create
+              </Button>
             </div>
           </form>
         </Form>
-        <DialogFooter>
-          <DialogClose asChild>
-            <Button
-              className="cursor-pointer"
-              variant={"secondary"}
-              onClick={() => form.reset()}
-            >
-              Cancel
-            </Button>
-          </DialogClose>
-            
-        </DialogFooter>
+        <DialogFooter></DialogFooter>
       </DialogContent>
     </Dialog>
   );
