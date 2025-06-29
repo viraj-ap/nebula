@@ -5,6 +5,8 @@ import { UserSettings } from "@prisma/client";
 import { differenceInDays, startOfMonth } from "date-fns";
 import React from "react";
 import { toast } from "sonner";
+import StatsCards from "./stats-cards";
+import CategoriesStats from "./categories-stats";
 
 const OverView = ({ userSettings }: { userSettings: UserSettings }) => {
   const [dateRange, setDateRange] = React.useState<{ from: Date; to: Date }>({
@@ -12,28 +14,40 @@ const OverView = ({ userSettings }: { userSettings: UserSettings }) => {
     to: new Date(),
   });
   return (
-    <div className="container flex flex-wrap items-end justify-between gap-2 py-8 px-5">
-      <h2 className="text-3xl font-bold">Overview</h2>
-      <div className="flex items-center gap-3">
-        <DateRangePicker
-          initialDateFrom={dateRange.from}
-          initialDateTo={dateRange.to}
-          showCompare={false}
-          onUpdate={(values) => {
-            const { range } = values;
-            const { from, to } = range;
-            if (!from || !to) return;
-            if (differenceInDays(to, from) > MAX_DATE_RANGE_DAYS) {
-              toast.error(
-                `You can only select a date range of ${MAX_DATE_RANGE_DAYS} days.`
-              );
-              return;
-            }
-            setDateRange({ from, to });
-          }}
-        />
+    <>
+      <div className="container flex flex-wrap items-end justify-between gap-2 py-8 px-5">
+        <h2 className="text-3xl font-bold">Overview</h2>
+        <div className="flex items-center gap-3">
+          <DateRangePicker
+            initialDateFrom={dateRange.from}
+            initialDateTo={dateRange.to}
+            showCompare={false}
+            onUpdate={(values) => {
+              const { range } = values;
+              const { from, to } = range;
+              if (!from || !to) return;
+              if (differenceInDays(to, from) > MAX_DATE_RANGE_DAYS) {
+                toast.error(
+                  `You can only select a date range of ${MAX_DATE_RANGE_DAYS} days.`
+                );
+                return;
+              }
+              setDateRange({ from, to });
+            }}
+          />
+        </div>
       </div>
-    </div>
+      <StatsCards
+        userSettings={userSettings}
+        from={dateRange.from}
+        to={dateRange.to}
+      />
+      <CategoriesStats
+        userSettings={userSettings}
+        from={dateRange.from}
+        to={dateRange.to}
+      />
+    </>
   );
 };
 

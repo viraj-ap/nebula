@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import React from "react";
 import CreateTransactionDialog from "./_components/create-transaction-dialog";
 import OverView from "./_components/over-view";
+import History from "./_components/history";
 
 async function page() {
   const user = await currentUser();
@@ -55,6 +56,7 @@ async function page() {
         </div>
       </div>
       <OverView userSettings={userSettings} />
+      <History userSettings={userSettings} />
     </div>
   );
 }
