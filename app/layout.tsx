@@ -36,6 +36,7 @@ export default function RootLayout({
   return (
     <ClerkProvider appearance={{ cssLayerName: "clerk" }}>
       <html lang="en" suppressHydrationWarning>
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
         <body
           className={`${poppins.variable} ${geistSans.variable} ${geistMono.variable} antialiased`}
         >
