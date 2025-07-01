@@ -111,6 +111,7 @@ const CreateTransactionDialog = ({ trigger, type }: Props) => {
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            {/* Description */}
             <FormField
               control={form.control}
               name="description"
@@ -118,7 +119,11 @@ const CreateTransactionDialog = ({ trigger, type }: Props) => {
                 <FormItem>
                   <FormLabel>Description</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter description" {...field} />
+                    <Input
+                      placeholder="Enter description"
+                      value={field.value || ""}
+                      onChange={field.onChange}
+                    />
                   </FormControl>
                   <FormDescription>
                     Transaction description (optional)
@@ -127,6 +132,7 @@ const CreateTransactionDialog = ({ trigger, type }: Props) => {
               )}
             />
 
+            {/* Amount */}
             <FormField
               control={form.control}
               name="amount"
@@ -138,7 +144,11 @@ const CreateTransactionDialog = ({ trigger, type }: Props) => {
                       type="number"
                       step="0.01"
                       placeholder="0.00"
-                      {...field}
+                      value={field.value || ""}
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        field.onChange(value === "" ? 0 : Number(value));
+                      }}
                     />
                   </FormControl>
                   <FormDescription>Enter the amount</FormDescription>
@@ -146,8 +156,8 @@ const CreateTransactionDialog = ({ trigger, type }: Props) => {
               )}
             />
 
-            <div className="flex items-center justify-between">
-              {" "}
+            <div className="flex items-center justify-between gap-4">
+              {/* Category */}
               <FormField
                 control={form.control}
                 name="category"
@@ -158,7 +168,7 @@ const CreateTransactionDialog = ({ trigger, type }: Props) => {
                       <CategoryPicker
                         type={type}
                         onChange={field.onChange}
-                        value={field.value}
+                        value={field.value || ""}
                       />
                     </FormControl>
                     <FormDescription>
@@ -167,6 +177,8 @@ const CreateTransactionDialog = ({ trigger, type }: Props) => {
                   </FormItem>
                 )}
               />
+
+              {/* Date */}
               <FormField
                 control={form.control}
                 name="date"
@@ -222,18 +234,14 @@ const CreateTransactionDialog = ({ trigger, type }: Props) => {
               >
                 Cancel
               </Button>
-              <Button
-                type="submit"
-                disabled={isPending}
-                className="cursor-pointer"
-              >
+              <Button type="submit" disabled={isPending} className="cursor-pointer">
                 {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                 Create
               </Button>
             </div>
           </form>
         </Form>
-        <DialogFooter></DialogFooter>
+        <DialogFooter />
       </DialogContent>
     </Dialog>
   );
