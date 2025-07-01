@@ -121,7 +121,7 @@ const CreateTransactionDialog = ({ trigger, type }: Props) => {
                   <FormControl>
                     <Input
                       placeholder="Enter description"
-                      value={field.value || ""}
+                      value={field.value}
                       onChange={field.onChange}
                     />
                   </FormControl>
@@ -144,10 +144,10 @@ const CreateTransactionDialog = ({ trigger, type }: Props) => {
                       type="number"
                       step="0.01"
                       placeholder="0.00"
-                      value={field.value || ""}
+                      value={field.value}
                       onChange={(e) => {
                         const value = e.target.value;
-                        field.onChange(value === "" ? 0 : Number(value));
+                        field.onChange(value === "" ? "" : Number(value));
                       }}
                     />
                   </FormControl>
@@ -168,7 +168,7 @@ const CreateTransactionDialog = ({ trigger, type }: Props) => {
                       <CategoryPicker
                         type={type}
                         onChange={field.onChange}
-                        value={field.value || ""}
+                        value={field.value}
                       />
                     </FormControl>
                     <FormDescription>

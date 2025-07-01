@@ -17,6 +17,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Separator } from "@/components/ui/separator";
 import { Category } from "@/lib/generated/prisma";
+import DeleteCategoryDialog from "../dashboard/_components/delete-category-dialog";
 
 const page = () => {
   return (
@@ -146,9 +147,14 @@ function CategoryCard({ category }: { category: Category }) {
         <CardTitle className="text-lg font-semibold">{category.name}</CardTitle>
       </CardHeader>
       <CardContent>
-        <Button className="w-full cursor-pointer">
-          <TrashIcon /> Remove
-        </Button>
+        <DeleteCategoryDialog
+          category={category}
+          trigger={
+            <Button className="w-full cursor-pointer">
+              <TrashIcon /> Remove
+            </Button>
+          }
+        />
       </CardContent>
     </Card>
   );
