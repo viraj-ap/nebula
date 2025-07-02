@@ -1,6 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { Button } from "./ui/button";
+import { redirect } from "next/navigation";
+import { ForwardIcon } from "lucide-react";
 
 export default function Hero() {
   return (
@@ -34,6 +37,14 @@ export default function Hero() {
             <div className="bg-emerald-500 rounded-lg px-4 py-2 font-bold font-poppins text-lg md:text-xl text-center mt-8">
               Then Nebula is for you!
             </div>
+            <Button
+              className="mt-4"
+              onClick={() => {
+                redirect("/dashboard");
+              }}
+            >
+              Go to Dashboard <ForwardIcon />
+            </Button>
           </motion.div>
 
           {/* Hero Image Section */}

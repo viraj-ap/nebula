@@ -34,7 +34,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider appearance={{ cssLayerName: "clerk" }}>
+    <ClerkProvider appearance={{ cssLayerName: "clerk" }} publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}>
       <html lang="en" suppressHydrationWarning>
         <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
         <body
