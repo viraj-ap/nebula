@@ -23,21 +23,21 @@ const page = () => {
   return (
     <>
       <div className="border-b bg-card">
-        <div className="container items-center justify-between gap-4 py-8 px-8">
-          <h1 className="text-3xl font-bold">Manage</h1>
-          <p className="text-muted-foreground">
+        <div className="container items-center justify-between gap-2 py-4 px-4 md:py-8 md:px-8">
+          <h1 className="text-2xl md:text-3xl font-bold">Manage</h1>
+          <p className="text-sm md:text-base text-muted-foreground">
             Manage your account settings and categories.
           </p>
         </div>
       </div>
-      <div className="container flex flex-col gap-4 p-2 mx-auto">
+      <div className="container flex flex-col gap-3 p-2 mx-auto">
         <Card>
-          <CardHeader>
-            <CardTitle>Currency</CardTitle>
+          <CardHeader className="p-4 md:p-6">
+            <CardTitle className="text-lg md:text-xl">Currency</CardTitle>
             <CardDescription>
               Set your preferred currency for transactions.
             </CardDescription>
-            <CardContent>
+            <CardContent className="px-0 pt-3 pb-0">
               <CurrencyComboBox />
             </CardContent>
           </CardHeader>
@@ -70,22 +70,22 @@ function CategoryList({ type }: { type: TransactionType }) {
     <>
       <SkeletonWrapper isLoading={categoriesQuery.isLoading}>
         <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center justify-between">
+          <CardHeader className="p-4 md:p-6">
+            <CardTitle className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
               <div className="flex items-center gap-2">
                 {type === "expense" ? (
-                  <TrendingDown className="h-12 w-12 items-center rounded-lg bg-red-400/10 p-2 text-red-500" />
+                  <TrendingDown className="h-8 w-8 md:h-12 md:w-12 items-center rounded-lg bg-red-400/10 p-1 md:p-2 text-red-500" />
                 ) : (
-                  <TrendingUp className="h-12 w-12 items-center rounded-lg bg-emerald-400/10 p-2 text-emerald-500" />
+                  <TrendingUp className="h-8 w-8 md:h-12 md:w-12 items-center rounded-lg bg-emerald-400/10 p-1 md:p-2 text-emerald-500" />
                 )}
-                <div className="text-2xl font-semibold">
+                <div className="text-xl md:text-2xl font-semibold">
                   {type === "expense" ? "Expenses" : "Income"} categories
-                  <div className="text-sm text-muted-foreground">
+                  <div className="text-xs md:text-sm text-muted-foreground">
                     Sorted by name
                   </div>
                 </div>
               </div>
-              <div className="">
+              <div className="w-full sm:w-auto">
                 <CreateCategoryDialog
                   type={type}
                   successCallback={() => {
@@ -94,14 +94,14 @@ function CategoryList({ type }: { type: TransactionType }) {
                   trigger={
                     <Button
                       className={cn(
-                        "w-full cursor-pointer",
+                        "w-full cursor-pointer text-sm",
                         type === "expense"
                           ? "bg-red-500 hover:bg-red-600"
                           : "bg-emerald-500 hover:bg-emerald-600"
                       )}
                     >
-                      Create new {type} category{" "}
-                      <span className="fon-bold">+</span>
+                      Create new {type}{" "}
+                      <span className="font-bold ml-1">+</span>
                     </Button>
                   }
                 />
@@ -109,8 +109,8 @@ function CategoryList({ type }: { type: TransactionType }) {
             </CardTitle>
           </CardHeader>
           {!dataAvailable && (
-            <div className="flex h-40 w-full flex-col items-center justify-center">
-              <p>
+            <div className="flex h-32 md:h-40 w-full flex-col items-center justify-center">
+              <p className="text-sm md:text-base">
                 No{" "}
                 <span
                   className={cn(
@@ -118,17 +118,17 @@ function CategoryList({ type }: { type: TransactionType }) {
                     type === "income" ? "text-emerald-500" : "text-red-500"
                   )}
                 >
-                  {type}
+                  {type} {" "}
                 </span>
                 categories yet.
               </p>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-xs md:text-sm text-muted-foreground">
                 Create one to get started
               </p>
             </div>
           )}
           {dataAvailable && (
-            <div className="grid grid-flow-row gap-2 p-2 sm:grid-flow-row sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 p-2">
               {categoriesQuery.data.map((category: Category) => (
                 <CategoryCard category={category} key={category.name} />
               ))}
@@ -143,16 +143,16 @@ function CategoryList({ type }: { type: TransactionType }) {
 function CategoryCard({ category }: { category: Category }) {
   return (
     <Card className="flex flex-col items-center justify-between">
-      <CardHeader className="flex flex-col items-center">
-        <div className="text-5xl">{category.icon}</div>
-        <CardTitle className="text-lg font-semibold">{category.name}</CardTitle>
+      <CardHeader className="flex flex-col items-center p-3 md:p-6">
+        <div className="text-3xl md:text-5xl">{category.icon}</div>
+        <CardTitle className="text-md md:text-lg font-semibold mt-2">{category.name}</CardTitle>
       </CardHeader>
-      <CardContent>
+      <CardContent className="pb-3 pt-0 px-3 w-full">
         <DeleteCategoryDialog
           category={category}
           trigger={
-            <Button className="w-full cursor-pointer">
-              <TrashIcon /> Remove
+            <Button className="w-full cursor-pointer text-xs md:text-sm" size="sm">
+              <TrashIcon className="h-4 w-4 mr-1" /> Remove
             </Button>
           }
         />
