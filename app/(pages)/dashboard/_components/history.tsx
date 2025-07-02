@@ -47,8 +47,8 @@ const History = ({ userSettings }: Props) => {
   const dataAvaiable =
     historyDataQuery.data && historyDataQuery.data.length > 0;
   return (
-    <div className="container">
-      <div className="mt-12 text-3xl font-bold">
+    <div className="container mx-auto w-full">
+      <div className="text-3xl font-bold">
         <Card className="col-span-12 mt-2 w-full">
           <CardHeader className="gap-2">
             <CardTitle className="grid grid-flow-row justify-between gap-2 md:grid-flow-col">

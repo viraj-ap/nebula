@@ -30,7 +30,7 @@ const page = () => {
           </p>
         </div>
       </div>
-      <div className="container flex flex-col gap-4 p-2">
+      <div className="container flex flex-col gap-4 p-2 mx-auto">
         <Card>
           <CardHeader>
             <CardTitle>Currency</CardTitle>
