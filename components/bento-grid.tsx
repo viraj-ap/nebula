@@ -120,7 +120,7 @@ export default function BentoGrid() {
                   alt="Custom API integration"
                   className="mt-12 p-2 rounded-xl"
                 />
-                <p className="mt-2 text-lg font-medium tracking-tight text-black dark:text-white max-lg:text-center mt-12">
+                <p className="text-lg font-medium tracking-tight text-black dark:text-white max-lg:text-center mt-12">
                   Export your data to Excel
                 </p>
                 <p className="mt-2 max-w-lg text-sm/6 text-gray-600 dark:text-gray-300 max-lg:text-center">

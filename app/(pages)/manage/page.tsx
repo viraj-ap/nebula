@@ -8,6 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Category } from "@prisma/client";
 import { TransactionType } from "@/lib/types";
 import { useQuery } from "@tanstack/react-query";
 import { TrashIcon, TrendingDown, TrendingUp } from "lucide-react";
@@ -17,7 +18,6 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Separator } from "@/components/ui/separator";
 import DeleteCategoryDialog from "../dashboard/_components/delete-category-dialog";
-import { Category } from "@prisma/client";
 
 const page = () => {
   return (
