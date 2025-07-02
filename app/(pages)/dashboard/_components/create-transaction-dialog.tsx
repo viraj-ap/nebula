@@ -1,9 +1,7 @@
 "use client";
 import {
   Dialog,
-  DialogClose,
   DialogContent,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -53,7 +51,7 @@ const CreateTransactionDialog = ({ trigger, type }: Props) => {
   const form = useForm<CreateTransactionSchemaType>({
     resolver: zodResolver(CreateTransactionSchema),
     defaultValues: {
-      type: type,
+      type,
       date: new Date(),
       description: "",
       amount: 0,
@@ -121,7 +119,7 @@ const CreateTransactionDialog = ({ trigger, type }: Props) => {
                   <FormControl>
                     <Input
                       placeholder="Enter description"
-                      value={field.value}
+                      value={field.value ?? ""}
                       onChange={field.onChange}
                     />
                   </FormControl>
@@ -144,7 +142,7 @@ const CreateTransactionDialog = ({ trigger, type }: Props) => {
                       type="number"
                       step="0.01"
                       placeholder="0.00"
-                      value={field.value}
+                      value={field.value ?? 0}
                       onChange={(e) => {
                         const value = e.target.value;
                         field.onChange(value === "" ? "" : Number(value));
@@ -168,7 +166,7 @@ const CreateTransactionDialog = ({ trigger, type }: Props) => {
                       <CategoryPicker
                         type={type}
                         onChange={field.onChange}
-                        value={field.value}
+                        value={field.value ?? ""}
                       />
                     </FormControl>
                     <FormDescription>
@@ -206,7 +204,7 @@ const CreateTransactionDialog = ({ trigger, type }: Props) => {
                         <PopoverContent align="start" className="w-auto p-0">
                           <Calendar
                             mode="single"
-                            selected={field.value}
+                            selected={field.value ?? new Date()}
                             onSelect={(value) => {
                               if (!value) return;
                               field.onChange(value);
@@ -230,18 +228,16 @@ const CreateTransactionDialog = ({ trigger, type }: Props) => {
                 type="button"
                 variant="outline"
                 onClick={() => setOpen(false)}
-                className="cursor-pointer"
               >
                 Cancel
               </Button>
-              <Button type="submit" disabled={isPending} className="cursor-pointer">
+              <Button type="submit" disabled={isPending}>
                 {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                 Create
               </Button>
             </div>
           </form>
         </Form>
-        <DialogFooter />
       </DialogContent>
     </Dialog>
   );

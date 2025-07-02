@@ -56,6 +56,8 @@ const CreateCategoryDialog = ({ type, successCallback, trigger }: Props) => {
     resolver: zodResolver(CreateCateogorySchema),
     defaultValues: {
       type: type,
+      name: "",    // Added missing name default
+      icon: "",    // Added missing icon default
     },
   });
 
@@ -136,7 +138,11 @@ const CreateCategoryDialog = ({ type, successCallback, trigger }: Props) => {
                 <FormItem>
                   <FormLabel>Name</FormLabel>
                   <FormControl>
-                    <Input placeholder="Category name" {...field} />
+                    <Input 
+                      placeholder="Category name" 
+                      value={field.value || ""}  // Ensure always string
+                      onChange={field.onChange}
+                    />
                   </FormControl>
                   <FormDescription>
                     This is the name of your new category
@@ -156,20 +162,18 @@ const CreateCategoryDialog = ({ type, successCallback, trigger }: Props) => {
                         <Button variant="outline" className="w-full h-[100px]">
                           {form.watch("icon") ? (
                             <div className="flex flex-col items-center gap-2">
-                              No Selection
                               <span className="text-5xl" role="img">
                                 {field.value}
                               </span>
                               <p className="text-xs text-muted-foreground">
-                                Click to Select
+                                Click to change
                               </p>
                             </div>
                           ) : (
                             <div className="flex flex-col items-center gap-2 cursor-pointer">
-                              No Selection
-                              <CircleOff className="h-[100px] w-[100px]" />
+                              <CircleOff className="h-[48px] w-[48px]" />
                               <p className="text-xs text-muted-foreground">
-                                Click to Select
+                                Click to select
                               </p>
                             </div>
                           )}
@@ -199,7 +203,11 @@ const CreateCategoryDialog = ({ type, successCallback, trigger }: Props) => {
             <Button
               className="cursor-pointer"
               variant={"secondary"}
-              onClick={() => form.reset()}
+              onClick={() => form.reset({
+                name: "",
+                icon: "",
+                type
+              })}
             >
               Cancel
             </Button>

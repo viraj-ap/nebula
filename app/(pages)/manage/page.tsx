@@ -30,7 +30,7 @@ const page = () => {
           </p>
         </div>
       </div>
-      <div className="container flex flex-col gap-4 p-4">
+      <div className="container flex flex-col gap-4 p-2">
         <Card>
           <CardHeader>
             <CardTitle>Currency</CardTitle>
@@ -100,7 +100,8 @@ function CategoryList({ type }: { type: TransactionType }) {
                           : "bg-emerald-500 hover:bg-emerald-600"
                       )}
                     >
-                      Create new {type} category
+                      Create new {type} category{" "}
+                      <span className="fon-bold">+</span>
                     </Button>
                   }
                 />
