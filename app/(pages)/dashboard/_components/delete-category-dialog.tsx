@@ -1,6 +1,5 @@
 "use client";
 
-import { Category } from "@/lib/generated/prisma";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { DeleteCategory } from "../_actions/categories";
 import { toast } from "sonner";
@@ -16,6 +15,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { TransactionType } from "@/lib/types";
+import { Category } from "@prisma/client";
 
 interface Props {
   trigger: React.ReactNode;
