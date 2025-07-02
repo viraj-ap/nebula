@@ -21,9 +21,9 @@ import {
 import { Currencies, Currency } from "@/lib/currencies";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import SkeletonWrapper from "./skeleton-wrapper";
-import { UserSettings } from "@/lib/generated/prisma";
 import { UpdateUserCurrency } from "@/app/wizard/_actions/userSettings";
 import { toast } from "sonner";
+import { UserSettings } from "@prisma/client";
 
 export function CurrencyComboBox() {
   const [open, setOpen] = React.useState(false);
