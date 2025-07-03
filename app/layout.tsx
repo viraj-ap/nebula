@@ -1,4 +1,3 @@
-// app/layout.tsx
 import type { Metadata } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Geist, Geist_Mono } from "next/font/google";
@@ -33,7 +32,7 @@ export const metadata: Metadata = {
     siteName: "Nebula",
     images: [
       {
-        url: "/og.png",
+        url: "https://nebula.virajpawar.xyz/og.png",
         width: 1200,
         height: 630,
         alt: "Nebula App OG Image",
