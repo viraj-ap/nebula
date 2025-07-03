@@ -34,9 +34,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider appearance={{ cssLayerName: "clerk" }} publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}>
+    <ClerkProvider
+      appearance={{ cssLayerName: "clerk" }}
+      publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}
+    >
       <html lang="en" suppressHydrationWarning>
         <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+        <meta property="og:title" content="Nebula - A budgeting app for the modern web" />
+        <meta property="og:description" content="A full custom modern web app for budget tracking" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://nebula.virajpawar.xyz/" />
+        <meta property="og:image" content="/og.png" />
+        <meta property="og:site_name" content="Nebula" />
         <body
           className={`${poppins.variable} ${geistSans.variable} ${geistMono.variable} antialiased`}
         >
