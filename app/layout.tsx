@@ -26,6 +26,27 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Nebula",
   description: "A budgeting app for the modern web",
+  openGraph: {
+    title: "Nebula - A budgeting app for the modern web",
+    description: "A full custom modern web app for budget tracking",
+    url: "https://nebula.virajpawar.xyz/",
+    siteName: "Nebula",
+    images: [
+      {
+        url: "/og.png",
+        width: 1200,
+        height: 630,
+        alt: "Nebula App OG Image",
+      },
+    ],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Nebula - A budgeting app for the modern web",
+    description: "A full custom modern web app for budget tracking",
+    images: ["/og.png"],
+  },
 };
 
 export default function RootLayout({
@@ -39,13 +60,6 @@ export default function RootLayout({
       publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}
     >
       <html lang="en" suppressHydrationWarning>
-        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-        <meta property="og:title" content="Nebula - A budgeting app for the modern web" />
-        <meta property="og:description" content="A full custom modern web app for budget tracking" />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://nebula.virajpawar.xyz/" />
-        <meta property="og:image" content="/og.png" />
-        <meta property="og:site_name" content="Nebula" />
         <body
           className={`${poppins.variable} ${geistSans.variable} ${geistMono.variable} antialiased`}
         >
